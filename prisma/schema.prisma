@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Episode {
+  id                    String   @id @default(cuid())
+  trackName             String
+  collectionName        String?
+  artworkUrl60          String?
+  artworkUrl160         String?
+  releaseDate           DateTime?
+  trackTimeMillis       Int?
+  searchTerm            String
+  createdAt             DateTime @default(now())
+ 
+  @@index([searchTerm])
+}
+
+model Podcast {
+  id                    String   @id @default(cuid())
+  trackName             String
+  artistName            String?
+  artworkUrl100         String?
+  artworkUrl600         String?
+  collectionName        String?
+  searchTerm            String
+  createdAt             DateTime @default(now())
+
+  @@index([searchTerm])
+}
